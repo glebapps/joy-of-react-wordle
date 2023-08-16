@@ -4,10 +4,10 @@ import { WORD_LENGTH } from '../../constants'
 import { range } from '../../utils'
 import { checkGuess } from '../../game-helpers'
 
-function Guess({ guess = '', answer }) {
+function Guess({ value, answer }) {
   let result
-  if (guess) {
-    result = checkGuess(guess, answer)
+  if (value) {
+    result = checkGuess(value, answer)
   }
   return (
     <p className="guess">

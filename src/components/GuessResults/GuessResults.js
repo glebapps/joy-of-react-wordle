@@ -10,7 +10,7 @@ function GuessResults({ guesses = [], answer }) {
   return (
     <div className="guess-results">
       {rows.map((_, index) => (
-        <Guess key={index} guess={guesses[index]} answer={answer} />
+        <Guess key={index} value={guesses[index]} answer={answer} />
       ))}
     </div>
   )

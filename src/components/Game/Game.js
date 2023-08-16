@@ -4,7 +4,8 @@ import { sample } from '../../utils'
 import { WORDS } from '../../data'
 import GuessInput from '../GuessInput'
 import GuessResults from '../GuessResults'
-import EndGameBanner from '../EndGameBanner'
+import WonBanner from '../WonBanner'
+import LostBanner from '../LostBanner'
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants'
 
 // Pick a random word on every pageload.
@@ -18,43 +19,43 @@ function Game() {
   })
   console.info({ answer })
   const [guesses, setGuesses] = React.useState([])
-  const [gameEnded, setGameEnded] = React.useState({
-    ended: false,
-    hasWon: false,
-  })
+  const [gameStatus, setGameStatus] = React.useState('running')
 
   const handleSubmitGuess = (guess) => {
-    setGuesses((guesses) => [...guesses, guess])
+    const nextGuesses = [...guesses, guess]
+    setGuesses((guesses) => nextGuesses)
 
-    const hasWon = guess === answer
+    if (guess === answer) {
+      setGameStatus('won')
+      return
+    }
 
-    if (hasWon || guesses.length >= NUM_OF_GUESSES_ALLOWED - 1) {
-      setGameEnded({ ended: true, hasWon })
+    if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus('lost')
+      return
     }
   }
 
   const restartGame = () => {
     setAnswer(sample(WORDS))
     setGuesses([])
-    setGameEnded({ ended: false, hasWon: false })
+    setGameStatus('running')
     console.info({ answer })
   }
 
   return (
     <>
-      {gameEnded.ended && (
-        <EndGameBanner
-          answer={answer}
-          hasWon={gameEnded.hasWon}
-          numGuesses={guesses.length}
-          restartGame={restartGame}
-        />
-      )}
       <GuessResults guesses={guesses} answer={answer} />
       <GuessInput
         handleSubmitGuess={handleSubmitGuess}
-        gameHasEnded={gameEnded.ended}
+        gameHasEnded={gameStatus !== 'running'}
       />
+      {gameStatus === 'won' && (
+        <WonBanner numGuesses={guesses.length} restartGame={restartGame} />
+      )}
+      {gameStatus === 'lost' && (
+        <LostBanner answer={answer} restartGame={restartGame} />
+      )}
     </>
   )
 }
