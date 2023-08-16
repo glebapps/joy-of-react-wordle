@@ -2,18 +2,18 @@ import React from 'react'
 
 import { WORD_LENGTH } from '../../constants'
 
-function TextInput({ handleGuess }) {
-  const [guess, setGuess] = React.useState('')
+function GuessInput({ handleSubmitGuess }) {
+  const [tentativeGuess, setTentativeGuess] = React.useState('')
 
   const onChange = (event) => {
     const text = event.target.value.toUpperCase()
-    setGuess(text)
+    setTentativeGuess(text)
   }
 
   const onSubmit = (event) => {
     event.preventDefault()
-    setGuess('')
-    handleGuess(guess)
+    setTentativeGuess('')
+    handleSubmitGuess(tentativeGuess)
   }
 
   return (
@@ -27,11 +27,11 @@ function TextInput({ handleGuess }) {
         maxLength={WORD_LENGTH}
         pattern={`[a-zA-Z]{${WORD_LENGTH}}`}
         title={`${WORD_LENGTH} letter word`}
-        value={guess}
+        value={tentativeGuess}
         onChange={onChange}
       />
     </form>
   )
 }
 
-export default TextInput
+export default GuessInput
