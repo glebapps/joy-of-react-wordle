@@ -2,7 +2,7 @@ import React from 'react'
 
 import { WORD_LENGTH } from '../../constants'
 
-function GuessInput({ handleSubmitGuess }) {
+function GuessInput({ handleSubmitGuess, gameHasEnded }) {
   const [tentativeGuess, setTentativeGuess] = React.useState('')
 
   const onChange = (event) => {
@@ -27,6 +27,7 @@ function GuessInput({ handleSubmitGuess }) {
         maxLength={WORD_LENGTH}
         pattern={`[a-zA-Z]{${WORD_LENGTH}}`}
         title={`${WORD_LENGTH} letter word`}
+        disabled={gameHasEnded}
         value={tentativeGuess}
         onChange={onChange}
       />
