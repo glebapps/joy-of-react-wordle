@@ -11,14 +11,10 @@ const answer = sample(WORDS)
 console.info({ answer })
 
 function Game() {
-  // guess = { id: 1, value: 'ABCDE' }
   const [guesses, setGuesses] = React.useState([])
 
   const handleGuess = (guess) => {
-    setGuesses((guesses) => [
-      ...guesses,
-      { id: crypto.randomUUID(), value: guess },
-    ])
+    setGuesses((guesses) => [...guesses, guess])
   }
 
   return (

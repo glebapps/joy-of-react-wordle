@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { WORD_LENGTH } from '../../constants'
+
 function TextInput({ handleGuess }) {
   const [guess, setGuess] = React.useState('')
 
@@ -21,10 +23,10 @@ function TextInput({ handleGuess }) {
         id="guess-input"
         type="text"
         required
-        minLength={5}
-        maxLength={5}
-        pattern="[a-zA-Z]{5}"
-        title="5 letter word"
+        minLength={WORD_LENGTH}
+        maxLength={WORD_LENGTH}
+        pattern={`[a-zA-Z]{${WORD_LENGTH}}`}
+        title={`${WORD_LENGTH} letter word`}
         value={guess}
         onChange={onChange}
       />
