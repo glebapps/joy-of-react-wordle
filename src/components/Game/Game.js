@@ -8,11 +8,15 @@ import EndGameBanner from '../EndGameBanner'
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants'
 
 // Pick a random word on every pageload.
-const answer = sample(WORDS)
+// const answer = sample(WORDS)
 // To make debugging easier, we'll log the solution in the console.
-console.info({ answer })
+// console.info({ answer })
 
 function Game() {
+  const [answer, setAnswer] = React.useState(() => {
+    return sample(WORDS)
+  })
+  console.info({ answer })
   const [guesses, setGuesses] = React.useState([])
   const [gameEnded, setGameEnded] = React.useState({
     ended: false,
@@ -29,6 +33,13 @@ function Game() {
     }
   }
 
+  const restartGame = () => {
+    setAnswer(sample(WORDS))
+    setGuesses([])
+    setGameEnded({ ended: false, hasWon: false })
+    console.info({ answer })
+  }
+
   return (
     <>
       {gameEnded.ended && (
@@ -36,6 +47,7 @@ function Game() {
           answer={answer}
           hasWon={gameEnded.hasWon}
           numGuesses={guesses.length}
+          restartGame={restartGame}
         />
       )}
       <GuessResults guesses={guesses} answer={answer} />
