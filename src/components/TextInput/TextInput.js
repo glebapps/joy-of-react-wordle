@@ -1,6 +1,6 @@
 import React from 'react'
 
-function TextInput() {
+function TextInput({ handleGuess }) {
   const [guess, setGuess] = React.useState('')
 
   const onChange = (event) => {
@@ -11,11 +11,11 @@ function TextInput() {
   const onSubmit = (event) => {
     event.preventDefault()
     setGuess('')
-    console.log({ guess })
+    handleGuess(guess)
   }
 
   return (
-    <form class="guess-input-wrapper" onSubmit={onSubmit}>
+    <form className="guess-input-wrapper" onSubmit={onSubmit}>
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         id="guess-input"
